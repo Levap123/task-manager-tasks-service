@@ -1,8 +1,8 @@
 package models
 
 type Task struct {
-	ID     int    `bson:"_id,omitempty"`
+	ID     string `bson:"_id,omitempty"`
 	Title  string `bson:"title,omitempty"`
 	Body   string `bson:"body,omitempty"`
-	UserID int    `bson:"user_id,omitempty"`
+	UserID int64  `bson:"user_id,omitempty"`
 }

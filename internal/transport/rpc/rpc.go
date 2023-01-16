@@ -6,7 +6,7 @@ import (
 )
 
 type Handler struct {
-	proto.UnimplementedTaskServiceServer
+	proto.UnimplementedTaskManagerServer
 	service *service.Service
 }
 

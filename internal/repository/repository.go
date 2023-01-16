@@ -2,8 +2,9 @@ package repository
 
 import (
 	"context"
+	"github.com/Levap123/task-manager-tasks-service/internal/models"
+	"github.com/Levap123/task-manager-tasks-service/internal/repository/mongodb"
 
-	"github.com/Levap123/task-manager-tasks-service/proto"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -12,11 +13,13 @@ type Repository struct {
 }
 
 type Task interface {
-	Create(ctx context.Context, in *proto.Task) (*proto.TaskID, error)
+	Create(ctx context.Context, in *models.Task) (string, error)
 }
 
-func NewRepoMongo(db *mongo.Collection) *Repository {
-	return &Repository{}
+func NewRepoMongo(cl *mongo.Collection) *Repository {
+	return &Repository{
+		Task: mongodb.NewTaskRepo(cl),
+	}
 }
 
 /*

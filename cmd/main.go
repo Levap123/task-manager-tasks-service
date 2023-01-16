@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"github.com/joho/godotenv"
 	"log"
 	"net"
 	"os"
@@ -14,6 +16,7 @@ import (
 )
 
 func main() {
+	godotenv.Load()
 	db, err := mongodb.InitDb()
 	if err != nil {
 		log.Fatalln(err)
@@ -22,12 +25,13 @@ func main() {
 	repo := repository.NewRepoMongo(tasksCollection)
 	service := service.NewService(repo)
 	handlerRPC := rpc.NewHandler(service)
+	fmt.Println(os.Getenv("TASKS_ADDRESS"), 123)
 	listener, err := net.Listen("tcp", os.Getenv("TASKS_ADDRESS"))
 	if err != nil {
 		log.Fatalln(err)
 	}
 	s := grpc.NewServer()
-	proto.RegisterTaskServiceServer(s, handlerRPC)
+	proto.RegisterTaskManagerServer(s, handlerRPC)
 	if err := s.Serve(listener); err != nil {
 		log.Fatalln(err)
 	}
