@@ -25,9 +25,10 @@ message  UserAndTask {
   string task_id = 2;
 }
 message Task {
-  string title = 1;
-  string body = 2;
-  int64  user_id = 3;
+  string id = 1;
+  string title = 2;
+  string body = 3;
+  int64  user_id = 4;
 }
  message TaskArray {
   repeated Task tasks = 1;

@@ -10,6 +10,10 @@ func (h *Handler) Create(ctx context.Context, in *proto.Task) (*proto.TaskHelper
 	return h.service.Create(ctx, in)
 }
 
+func (h *Handler) GetAll(ctx context.Context, req *proto.UserRequest) (*proto.TaskArray, error) {
+	return h.service.GetAll(ctx, req)
+}
+
 /*
 	Create(context.Context, *Task) (*TaskHelperBody, error)
 	Update(context.Context, *Task) (*TaskHelperBody, error)

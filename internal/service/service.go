@@ -12,6 +12,7 @@ type Service struct {
 
 type Task interface {
 	Create(ctx context.Context, in *proto.Task) (*proto.TaskHelperBody, error)
+	GetAll(ctx context.Context, in *proto.UserRequest) (*proto.TaskArray, error)
 }
 
 func NewService(repo *repository.Repository) *Service {

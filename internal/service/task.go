@@ -17,7 +17,6 @@ func NewTaskService(repo repository.Task) *TaskService {
 
 func (ts *TaskService) Create(ctx context.Context, in *proto.Task) (*proto.TaskHelperBody, error) {
 	model := &models.Task{
-		ID:     "",
 		Title:  in.Title,
 		Body:   in.Body,
 		UserID: in.UserId,
@@ -30,4 +29,25 @@ func (ts *TaskService) Create(ctx context.Context, in *proto.Task) (*proto.TaskH
 		Id: taskId,
 	}
 	return modelResp, err
+}
+
+func (ts *TaskService) GetAll(ctx context.Context, in *proto.UserRequest) (*proto.TaskArray, error) {
+	res, err := ts.repo.GetAll(ctx, in.Id)
+	if err != nil {
+		return nil, err
+	}
+	protoArr := make([]*proto.Task, 0)
+	for i := 0; i < len(res); i++ {
+		buff := &proto.Task{
+			Id:     res[i].ID,
+			Title:  res[i].Title,
+			Body:   res[i].Body,
+			UserId: res[i].UserID,
+		}
+		protoArr = append(protoArr, buff)
+	}
+	req := &proto.TaskArray{
+		Tasks: protoArr,
+	}
+	return req, nil
 }
