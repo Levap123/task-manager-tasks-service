@@ -14,10 +14,13 @@ func (h *Handler) GetAll(ctx context.Context, req *proto.UserRequest) (*proto.Ta
 	return h.service.GetAll(ctx, req)
 }
 
+func (h *Handler) Get(ctx context.Context, req *proto.UserAndTask) (*proto.Task, error) {
+	return h.service.Get(ctx, req)
+}
+
 /*
 	Create(context.Context, *Task) (*TaskHelperBody, error)
 	Update(context.Context, *Task) (*TaskHelperBody, error)
 	GetAll(context.Context, *UserRequest) (*TaskArray, error)
-	Get(context.Context, *UserAndTask) (*Task, error)
 	Delete(context.Context, *TaskHelperBody) (*TaskHelperBody, error)
 */

@@ -51,3 +51,17 @@ func (ts *TaskService) GetAll(ctx context.Context, in *proto.UserRequest) (*prot
 	}
 	return req, nil
 }
+
+func (ts *TaskService) Get(ctx context.Context, in *proto.UserAndTask) (*proto.Task, error) {
+	task, err := ts.repo.Get(ctx, in.UserId, in.TaskId)
+	if err != nil {
+		return nil, err
+	}
+	resp := &proto.Task{
+		Id:     task.ID,
+		Title:  task.Title,
+		Body:   task.Body,
+		UserId: task.UserID,
+	}
+	return resp, nil
+}

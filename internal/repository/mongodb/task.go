@@ -34,3 +34,15 @@ func (tr *TaskRepo) GetAll(ctx context.Context, userId int64) ([]models.Task, er
 	}
 	return arr, nil
 }
+func (tr *TaskRepo) Get(ctx context.Context, userId int64, taskId string) (models.Task, error) {
+	var task models.Task
+	objectId, err := primitive.ObjectIDFromHex(taskId)
+	if err != nil {
+		return models.Task{}, err
+	}
+
+	if err := tr.cl.FindOne(ctx, bson.D{{"user_id", userId}, {"_id", objectId}}).Decode(&task); err != nil {
+		return models.Task{}, err
+	}
+	return task, nil
+}
