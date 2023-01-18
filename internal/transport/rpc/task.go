@@ -18,6 +18,10 @@ func (h *Handler) Get(ctx context.Context, req *proto.UserAndTask) (*proto.Task,
 	return h.service.Get(ctx, req)
 }
 
+func (h *Handler) Update(ctx context.Context, req *proto.Task) (*proto.TaskHelperBody, error) {
+	return h.service.Update(ctx, req)
+}
+
 /*
 	Create(context.Context, *Task) (*TaskHelperBody, error)
 	Update(context.Context, *Task) (*TaskHelperBody, error)

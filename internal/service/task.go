@@ -65,3 +65,14 @@ func (ts *TaskService) Get(ctx context.Context, in *proto.UserAndTask) (*proto.T
 	}
 	return resp, nil
 }
+
+func (ts *TaskService) Update(ctx context.Context, task *proto.Task) (*proto.TaskHelperBody, error) {
+	taskId, err := ts.repo.Update(ctx, task.Title, task.Body, task.Id, task.UserId)
+	if err != nil {
+		return nil, err
+	}
+	resp := &proto.TaskHelperBody{
+		Id: taskId,
+	}
+	return resp, nil
+}

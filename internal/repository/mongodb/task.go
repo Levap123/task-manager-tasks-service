@@ -2,6 +2,7 @@ package mongodb
 
 import (
 	"context"
+	"fmt"
 	"github.com/Levap123/task-manager-tasks-service/internal/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -45,4 +46,31 @@ func (tr *TaskRepo) Get(ctx context.Context, userId int64, taskId string) (model
 		return models.Task{}, err
 	}
 	return task, nil
+}
+
+func (tr *TaskRepo) Update(ctx context.Context, title, body, taskId string, userId int64) (string, error) {
+	updateBody := bson.D{
+		{
+			"title", title,
+		},
+		{
+			"body", body,
+		},
+		{
+			"user_id", userId,
+		},
+	}
+	update := bson.D{{"$set", updateBody}}
+	taskIdObj, err := primitive.ObjectIDFromHex(taskId)
+	if err != nil {
+		return "", err
+	}
+	res, err := tr.cl.UpdateByID(ctx, taskIdObj, update)
+	if res.MatchedCount == 0 {
+		return "", fmt.Errorf("taskId not found")
+	}
+	if err != nil {
+		return "", err
+	}
+	return taskId, nil
 }
