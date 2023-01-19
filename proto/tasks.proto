@@ -9,7 +9,7 @@ service TaskManager {
   rpc Update (Task) returns (TaskHelperBody);
   rpc GetAll (UserRequest) returns (TaskArray);
   rpc Get (UserAndTask) returns (Task);
-  rpc Delete (TaskHelperBody) returns (TaskHelperBody);
+  rpc Delete (UserAndTask) returns (TaskHelperBody);
 }
 
 message TaskHelperBody {
